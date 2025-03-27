@@ -1,8 +1,8 @@
 name: init-executable
 type: shell
 commands:
-  - rm /usr/sbin/init
-  - mv /usr/sbin/init.new /usr/sbin/init
-  - chmod +x /usr/sbin/init
+  - rm /usr/bin/init
+  - mv /usr/bin/init.new /usr/bin/init
+  - chmod +x /usr/bin/init
   - chmod +x /usr/share/init.d/*
 

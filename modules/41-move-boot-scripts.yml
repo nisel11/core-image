@@ -2,10 +2,15 @@ name: move-boot-scripts
 type: shell
 commands:
   - mkdir -p /usr/libexec/
-  - mv /usr/sbin/grub-mkconfig /usr/libexec/
-  - mv /usr/sbin/grub-mkconfig-replacement /usr/sbin/grub-mkconfig
-  - chmod +x /usr/sbin/grub-mkconfig
-  - mv /usr/sbin/update-grub /usr/libexec/
-  - mv /usr/sbin/update-grub-replacement /usr/sbin/update-grub
-  - chmod +x /usr/sbin/update-grub
-  
+  - mv /usr/bin/grub-mkconfig /usr/libexec/
+  - mv /usr/bin/grub-mkconfig-replacement /usr/bin/grub-mkconfig
+  - chmod +x /usr/bin/grub-mkconfig
+  - mv /usr/bin/update-grub /usr/libexec/
+  - chmod +x /usr/libexec/update-grub
+  - mv /usr/bin/update-grub-replacement /usr/bin/update-grub
+  - chmod +x /usr/bin/update-grub
+modules:
+  - name: add-execute-rules-to-lpkg
+    type: shell
+    commands:
+      - chmod +x /usr/bin/lpkg

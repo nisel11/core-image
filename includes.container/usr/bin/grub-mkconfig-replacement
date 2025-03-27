@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+
+# make a /boot/grub dir if don't exist
+mkdir -p /boot/grub
+
 /usr/libexec/grub-mkconfig "$@"
 # delete this script so users don't accidentally break their system with it
-rm /usr/sbin/grub-mkconfig
+rm /usr/bin/grub-mkconfig

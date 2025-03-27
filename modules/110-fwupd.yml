@@ -1,6 +1,4 @@
 name: fwupd
-type: apt
-source:
-  packages:
-  - fwupd
-  - fwupd-amd64-signed
+type: shell
+commands:
+  - pacman -Sy --noconfirm fwupd

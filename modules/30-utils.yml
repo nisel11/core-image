@@ -1,13 +1,4 @@
 name: utils
-type: apt
-source:
-  packages:
-  - nano
-  - zsync
-  - rsync
-  - dialog
-  - less
-  - curl
-  - tracker
-  - bash-completion
-  - libnss-myhostname
+type: shell
+commands:
+  - pacman -S --noconfirm nano zsync rsync dialog less curl bash-completion

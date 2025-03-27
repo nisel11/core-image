@@ -1,13 +1,4 @@
 name: fs
-type: apt
-source:
-  packages:
-  - exfatprogs
-  - btrfs-progs
-  - dosfstools
-  - gvfs-backends
-  - ntfs-3g
-  - nfs-common
-  - gvfs-fuse
-  - libfuse3-3
-  - lvm2
+type: shell
+commands:
+  - pacman -S --noconfirm exfatprogs btrfs-progs dosfstools gvfs ntfs-3g lvm2 nfs-utils fuse3

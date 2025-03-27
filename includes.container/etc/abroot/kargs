@@ -1,1 +1,1 @@
-quiet splash bgrt_disable $vt_handoff lsm=integrity
+quiet splash loglevel=3 udev.log_level=3 bgrt_disable $vt_handoff lsm=integrity 

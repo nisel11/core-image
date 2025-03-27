@@ -1,6 +1,0 @@
-name: manpages
-type: apt
-source:
-  packages:
-  - manpages
-  - manpages-posix

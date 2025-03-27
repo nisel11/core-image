@@ -1,6 +1,4 @@
 name: fingerprint
-type: apt
-source:
-  packages:
-  - fprintd
-  - libpam-fprintd
+type: shell
+commands:
+  - pacman -Sy --noconfirm fprintd
