@@ -5,13 +5,19 @@
     "registry": "ghcr.io",
     "registryService": "registry.ghcr.io",
     "registryAPIVersion": "v2",
-    "name": "vanilla-os/core",
+    "name": "nisel11/core",
     "tag": "main",
 
-    "iPkgMngAdd": "apt-get install -y",
-    "iPkgMngRm": "apt-get remove -y --autoremove",
+    "iPkgMngPre": "lpkg --unlock",
+    "iPkgMngPost": "lpkg --lock",
+    "iPkgMngAdd": "pacman -Sy --noconfirm",
+    "iPkgMngRm": "pacman -R --noconfim",
     "iPkgMngApi": "https://packages.vanillaos.org/api/pkg/{packageName}",
     "iPkgMngStatus": 2,
+
+    "updateInitramfsCmd": "/usr/bin/lpkg --unlock && /usr/bin/mkinitcpio -P && /usr/bin/lpkg --lock",
+    "updateGrubCmd": "/usr/bin/grub-mkconfig -o '%s'",
+    "initramfsFormat": "initramfs-%s.img",
 
     "differURL": "https://differ.vanillaos.org",
 

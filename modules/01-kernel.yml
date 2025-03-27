@@ -1,6 +1,4 @@
 name: kernel
-type: apt
-source:
-  packages:
-  - linux-image-amd64
-  - linux-headers-amd64
+type: shell
+commands:
+  - pacman -S --noconfirm linux linux-headers

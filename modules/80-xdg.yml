@@ -1,7 +1,4 @@
 name: xdg
-type: apt
-source:
-  packages:
-  - xdg-utils
-  - xdg-user-dirs
-  - xdg-user-dirs-gtk
+type: shell
+commands:
+  - pacman -Sy --noconfirm xdg-utils xdg-user-dirs xdg-user-dirs-gtk

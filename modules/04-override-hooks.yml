@@ -1,0 +1,4 @@
+name: override-hooks
+type: shell
+commands:
+  - sed -i '/^#/!s/HOOKS=(.*)/HOOKS=(base udev btrfs autodetect microcode modconf kms keyboard keymap consolefont encrypt block lvm2 filesystems fsck)/g' /etc/mkinitcpio.conf

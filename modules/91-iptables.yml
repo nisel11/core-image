@@ -1,10 +1,10 @@
 name: iptables
-type: apt
-source:
-  packages:
-  - iptables
+type: shell
+commands:
+  - pacman -Sy --noconfirm iptables
 modules:
   - name: enable-iptables-systemd-unit
     type: shell
     commands:
+      - mkdir /etc/systemd/system/multi-user.target.wants
       - ln -s /usr/lib/systemd/system/iptables.service /etc/systemd/system/multi-user.target.wants/iptables.service

@@ -6,6 +6,9 @@ set -o nounset
 scriptsPath="/usr/share/init.d"
 nextInit="/lib/systemd/systemd"
 
+# export minimal PATH for abroot
+export PATH="/usr/bin:/usr/sbin:/bin:/sbin"
+
 log() {
   local level="$1"
   local message="$2"

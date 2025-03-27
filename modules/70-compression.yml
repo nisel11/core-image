@@ -1,7 +1,4 @@
 name: compression
-type: apt
-source:
-  packages:
-  - zstd
-  - zip
-  - unzip
+type: shell
+commands:
+  - pacman -Sy --noconfirm zstd zip unzip

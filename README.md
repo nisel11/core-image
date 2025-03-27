@@ -1,6 +1,11 @@
-# Vanilla OS Core Image
+# Planifolia Core Image
 
-Containerfile for building a Vanilla OS Core image.
+Containerfile for building a Planifolia Core image.
+
+This image is based on official ArchLinux docker image and may have issues from it :)
+
+> [!CAUTION]
+> This image is experimental and isn't suitable for production. If you encounter any bugs during testing, please report them in this repository.
 
 > [!IMPORTANT]
 > This image is not intended to be used directly. It is used as a base image for other images.
@@ -13,13 +18,5 @@ Containerfile for building a Vanilla OS Core image.
 
 ```bash
 vib build recipe.yml
-podman image build -t vanillaos/core .
-```
-
-## Verify Image Build Provenance Attestation
-
-All the image builds/pushes are attested for build provenance and integrity using the [attest-build-provenance`](https://github.com/actions/attest-build-provenance) action. The attestations can be verified [here](https://github.com/Vanilla-OS/core-image/attestations) or by having the latest version of [GitHub CLI](https://github.com/cli/cli/releases/latest) installed in your system. Then, execute the following command:
-
-```sh
-gh attestation verify oci://ghcr.io/vanilla-os/core:main --owner Vanilla-OS
+podman image build -t planifolia/core .
 ```

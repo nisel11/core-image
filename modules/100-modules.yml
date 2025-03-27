@@ -1,11 +1,4 @@
 name: modules
-type: apt
-source:
-  packages:
-  - dkms
-  - bolt
-  - inputattach
-  - iucode-tool
-  - cryptsetup-initramfs
-  - acpi-call-dkms
-  - libsasl2-modules
+type: shell
+commands:
+  - pacman -Sy --noconfirm dkms bolt joyutils	iucode-tool cryptsetup acpi_call-dkms libsasl

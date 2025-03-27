@@ -1,9 +1,4 @@
 name: input-and-locale
-type: apt
-source:
-  packages:
-  - locales
-  - kmod
-  - xkb-data
-  - im-config
-  - console-setup
+type: shell
+commands:
+  - pacman -S --noconfirm glibc-locales kmod xkeyboard-config

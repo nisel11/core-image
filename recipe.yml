@@ -1,36 +1,36 @@
-name: Vanilla Core
+name: Planifolia Core
 id: core
 
 stages:
 - id: build
-  base: ghcr.io/vanilla-os/pico:dev
+  base: ghcr.io/archlinux/archlinux:base
   singlelayer: false
   labels:
-    maintainer: Vanilla OS Contributors
-  args:
-    DEBIAN_FRONTEND: noninteractive
-  runs:
-    commands:
-      - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
+    maintainer: nisel11
 
   modules:
-  - name: mandb
+  - name: check-updates
     type: shell
     commands:
-    - apt update
-    - apt install -y man-db
-    - mandb -c
+      - pacman -Syu --noconfirm
+
+  - name: man
+    type: shell
+    commands:
+      - sed -i "s|NoExtract*|#NoExtract|g" /etc/pacman.conf
+      - pacman -Sy --noconfirm man-db
+      - mandb -c
 
   - name: packages-modules
     type: includes
     includes:
       - modules/00-vanilla-abroot.yml
-      - modules/00-vanilla-base-files.yml
       - modules/00-vanilla-apx.yml
       - modules/00-vanilla-apx-stacks.yml
       - modules/01-kernel.yml
       - modules/02-kernel-version-file.yml
       - modules/03-fswarn.yml
+      - modules/04-override-hooks.yml
       - modules/05-firmware.yml
       - modules/10-input-and-locale.yml
       - modules/20-ssh.yml
@@ -46,31 +46,21 @@ stages:
       - modules/100-modules.yml
       - modules/110-fwupd.yml
       - modules/120-fingerprint.yml
-      - modules/140-manpages.yml
+      - modules/130-services.yml
       - modules/150-init-executable.yml
       - modules/998-podman-registry.yml
-      - modules/999-replace-locale-gen.yml
       - modules/999-remove-grub-files.yml
 
   - name: zram-config
     type: shell
     commands:
-      - echo -e "ALGO=lz4\nPERCENT=50" >> /etc/default/zramswap
+      - pacman -Sy --noconfirm zram-generator
+      - echo -e "[zram0]\nzram-size = min(ram / 2)\ncompression-algorithm = lz4\n" >> /etc/systemd/zram-generator.conf
 
   - name: fsguard-runtime-deps
-    type: apt
-    source:
-      packages:
-        - "minisign"
-        - "squashfs-tools"
-        - "python3"
-
-  - name: cleanup1
     type: shell
     commands:
-    - apt remove -y dpkg-dev build-essential
-    - apt autoremove -y
-    - apt clean
+      - pacman -Sy --noconfirm minisign squashfs-tools python
 
   - name: polkit-remember-auth
     type: shell
@@ -82,19 +72,16 @@ stages:
     FsGuardLocation: "/usr/sbin/FsGuard"
     GenerateKey: true
     FilelistPaths: ["/usr/bin"]
-    modules:
-      - name: minisign
-        type: apt
-        source:
-          packages:
-            - "minisign"
+
+  - name: lock-pacman
+    type: shell
+    commands:
+      - lpkg --lock
 
   - name: cleanup2
     type: shell
     commands:
-      - rm /etc/ssh/ssh_host_*key*
       - rm -rf /var/cache/*
       - rm -rf /tmp/*
       - rm -rf /var/tmp/*
       - rm -rf /sources
-      - mkdir -p /var/cache/apt/archives/partial

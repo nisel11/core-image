@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/libexec/grub-mkconfig -o /boot/grub/grub.cfg

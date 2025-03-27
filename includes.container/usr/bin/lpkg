@@ -1,0 +1,79 @@
+#!/bin/bash
+
+show_usage() {
+    echo "Usage: $0 [--lock|--unlock] [--verbose] [--dpath <path>]"
+    exit 1
+}
+
+LOCK=0
+UNLOCK=0
+VERBOSE=0
+DPATH="/usr/bin"
+
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --lock)
+            LOCK=1
+            ;;
+        --unlock)
+            UNLOCK=1
+            ;;
+        --verbose)
+            VERBOSE=1
+            ;;
+        --dpath)
+            shift
+            if [[ -z "$1" ]]; then
+                echo "Error: --dpath wanted path."
+                exit 1
+            fi
+            DPATH="$1"
+            ;;
+        *)
+            show_usage
+            ;;
+    esac
+    shift
+done
+
+if [[ $LOCK -eq 1 && $UNLOCK -eq 1 ]]; then
+    echo "Error: --lock and --unlock cannot be used together."
+    exit 1
+fi
+
+if [[ $LOCK -eq 0 && $UNLOCK -eq 0 ]]; then
+    show_usage
+fi
+
+if [[ $LOCK -eq 1 ]]; then
+    if [[ -f "$DPATH/pacman" ]]; then
+        [[ $VERBOSE -eq 1 ]] && echo "Locking $DPATH/pacman"
+        mv "$DPATH/pacman" "$DPATH/private.pacman"
+        if [[ $? -eq 0 ]]; then
+            [[ $VERBOSE -eq 1 ]] && echo "pacman locked."
+        else
+            echo "Warning: Failed to lock pacman."
+        fi
+    else
+        echo "Error: $DPATH/pacman not found."
+        exit 1
+    fi
+fi
+
+if [[ $UNLOCK -eq 1 ]]; then
+    if [[ -f "$DPATH/private.pacman" ]]; then
+        [[ $VERBOSE -eq 1 ]] && echo "Unlocking $DPATH/private.pacman"
+        mv "$DPATH/private.pacman" "$DPATH/pacman"
+        if [[ $? -eq 0 ]]; then
+            [[ $VERBOSE -eq 1 ]] && echo "pacman unlocked."
+        else
+            echo "Warning: Failed to unlock pacman."
+        fi
+    else
+        echo "Error: $DPATH/private.pacman not found."
+        exit 1
+    fi
+fi
+
+exit 0
