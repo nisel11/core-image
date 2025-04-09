@@ -1,10 +1,11 @@
 name: Vanilla Core
 id: core
+vibversion: 1.0.2
 
 stages:
 - id: build
   base: ghcr.io/vanilla-os/pico:dev
-  singlelayer: false
+  addincludes: true
   labels:
     maintainer: Vanilla OS Contributors
   args:
@@ -59,8 +60,8 @@ stages:
 
   - name: fsguard-runtime-deps
     type: apt
-    source:
-      packages:
+    sources:
+      - packages:
         - "minisign"
         - "squashfs-tools"
         - "python3"
@@ -85,8 +86,8 @@ stages:
     modules:
       - name: minisign
         type: apt
-        source:
-          packages:
+        sources:
+          - packages:
             - "minisign"
 
   - name: cleanup2
